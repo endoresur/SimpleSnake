@@ -18,8 +18,8 @@ class MainGame:
         self.playtime = 0.0
 
         self.all_sprites = pygame.sprite.Group()
-        player = sprites.Player()
-        self.all_sprites.add(player)
+        self.player = sprites.Player()
+        self.all_sprites.add(self.player)
 
     def run(self):
         """
@@ -35,6 +35,15 @@ class MainGame:
                     if event.key == pygame.K_ESCAPE:
                         running = False
 
+                    if event.key == pygame.K_DOWN:
+                        self.update_direction(options.Directions.DOWN)
+                    elif event.key == pygame.K_UP:
+                        self.update_direction(options.Directions.UP)
+                    elif event.key == pygame.K_LEFT:
+                        self.update_direction(options.Directions.LEFT)
+                    elif event.key == pygame.K_RIGHT:
+                        self.update_direction(options.Directions.RIGHT)
+
             self.all_sprites.update()
 
             self.screen.fill(options.Colors.GRAY)
@@ -44,6 +53,20 @@ class MainGame:
 
         pygame.quit()
 
+    # TODO fix problem with wrong definition of direction
+    def update_direction(self, direction):
+        x, y = direction
+        self.player.x += x
+        self.player.y += y
+
+        if self.player.x > options.Settings.WIDTH:
+            self.player.x = 0
+        elif self.player.x < 0:
+            self.player.x = options.Settings.WIDTH
+        elif self.player.y > options.Settings.HEIGHT:
+            self.player.y = 0
+        elif self.player.y < 0:
+            self.player.y = options.Settings.HEIGHT
 
 ###
 
