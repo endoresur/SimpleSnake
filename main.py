@@ -19,6 +19,8 @@ class MainGame:
 
         self.all_sprites = pygame.sprite.Group()
         self.player = sprites.Player()
+        self.apple = sprites.Apple()
+        self.all_sprites.add(self.apple)
         self.all_sprites.add(self.player)
 
     def run(self):
@@ -53,20 +55,17 @@ class MainGame:
 
         pygame.quit()
 
-    # TODO fix problem with wrong definition of direction
     def update_direction(self, direction):
-        x, y = direction
-        self.player.x += x
-        self.player.y += y
 
-        if self.player.x > options.Settings.WIDTH:
-            self.player.x = 0
-        elif self.player.x < 0:
-            self.player.x = options.Settings.WIDTH
-        elif self.player.y > options.Settings.HEIGHT:
-            self.player.y = 0
-        elif self.player.y < 0:
-            self.player.y = options.Settings.HEIGHT
+        if (direction == options.Directions.RIGHT and self.player.direction == options.Directions.LEFT or
+                direction == options.Directions.LEFT and self.player.direction == options.Directions.RIGHT):
+            return
+        elif (direction == options.Directions.UP and self.player.direction == options.Directions.DOWN or
+                direction == options.Directions.DOWN and self.player.direction == options.Directions.UP):
+            return
+
+        self.player.direction = direction
+
 
 ###
 
