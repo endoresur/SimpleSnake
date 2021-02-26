@@ -49,5 +49,3 @@ class Apple(pygame.sprite.Sprite):
 
     def update(self):
         pass
-
-
